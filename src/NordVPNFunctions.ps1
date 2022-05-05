@@ -54,6 +54,7 @@ function Initialize-NordVPNVariables {
         }catch{
             Write-Host -n -f DarkRed "[WARNING] "
             Write-Host -f DarkYellow "$_"
+            Show-ExceptionDetails $_ -ShowStack
         }
         Write-Host -n -f DarkCyan "[Initialize] "
         Write-Host -f Cyan "Loading Settings"
