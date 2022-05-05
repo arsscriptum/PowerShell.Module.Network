@@ -27,7 +27,7 @@ function Initialize-NordVPNVariables {
                 OfflineMode                  = @([Boolean], $false)
                 DeleteServerFallbackAfterUse = @([Boolean], $false)
             }
-            New-Variable - -ErrorAction Ignore Option Constant -Scope Script KnownCountries @(
+            New-Variable -ErrorAction Ignore -Option Constant -Scope Script KnownCountries @(
                 'AL', 'AR', 'AU', 'AT', 'BE', 'BA', 'BR', 'BG', 'CA', 'CL', 'CR', 'HR', 'CY', 'CZ', 'DK', 'EE', 'FI',
                 'FR', 'GE', 'DE', 'GR', 'HK', 'HU', 'IS', 'IN', 'ID', 'IE', 'IL', 'IT', 'JP', 'LV', 'LU', 'MY', 'MX',
                 'MD', 'NL', 'NZ', 'MK', 'NO', 'PL', 'PT', 'RO', 'RS', 'SG', 'SK', 'SI', 'ZA', 'KR', 'ES', 'SE', 'CH',
@@ -51,6 +51,8 @@ function Initialize-NordVPNVariables {
             New-Variable -Scope Script CountryCache $null -ErrorAction Ignore
             New-Variable -Scope Script TechnologyCache $null -ErrorAction Ignore
             New-Variable -Scope Script GroupCache $null -ErrorAction Ignore
+
+            New-Variable -Scope Script NordVPNInitialized $true -ErrorAction Ignore
         }catch{
             Write-Host -n -f DarkRed "[WARNING] "
             Write-Host -f DarkYellow "$_"
@@ -61,6 +63,11 @@ function Initialize-NordVPNVariables {
         LoadSettings
 }
 
+function Get-NordVPNInitialized{
+    $Initialized = Get-Variable -Name NordVPNInitialized -ErrorAction Ignore -ValueOnly
+    if(($Initialized -eq $Null ) -Or ($Initialized -eq $false)){ return $False }
+    return $Initialized
+}
 
 function LoadSettings {
     Write-Debug "Loading in settings from '$SettingsFile'"

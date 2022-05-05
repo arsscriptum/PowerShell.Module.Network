@@ -16,12 +16,36 @@ A PowerShell module for interacting with the Network Adapters and the NordVPN AP
 
 ## Introduction
 
+### Network Adapters
+General Settings
+
+### NordVPN 
 This module provides various functions for retrieving country, grouping,
- technology, and server information from the web API provided by NordVPN.
- Possible filter parameters are generated dynamically by retrieving lists of
- valid entries from the API. Lists of countries, groups, technologies, and
- servers are included as an offline fallback, and these can be updated.
- Sessional caching of country, group, and technology data is customisable.
+technology, and server information from the web API provided by NordVPN.
+
+Possible filter parameters are generated dynamically by retrieving lists of
+valid entries from the API. Lists of countries, groups, technologies, and
+servers are included as an offline fallback, and these can be updated.
+Sessional caching of country, group, and technology data is customisable.
+
+## Functions
+- Clear-NordVPNCache
+- Clear-NordVPNCountryCache
+- Clear-NordVPNGroupCache
+- Clear-NordVPNTechnologyCache
+- Find-NordVPNCity
+- Find-NordVPNCountry
+- Find-NordVPNGroup
+- Find-NordVPNTechnology
+- Get-NordVPNCityList
+- Get-NordVPNCountryList
+- Get-NordVPNGroupList
+- Get-NordVPNModuleSetting
+- Get-NordVPNRecommendedList
+- Get-NordVPNServerList
+- Get-NordVPNTechnologyList
+- Reset-NordVPNModule
+- Set-NordVPNModuleSetting
 
 ## Documentation
 
