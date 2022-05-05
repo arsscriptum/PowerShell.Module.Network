@@ -30,15 +30,30 @@ if($Paths.Count -gt 0){
 
 
 function Get-SpeedTesterPath {
-       
-  $ScriptMyInvocation = $Script:MyInvocation.MyCommand.Path
-  $ModPath = (Get-Item $ScriptMyInvocation).DirectoryName
-  $BinPath = Join-Path $ModPath 'bin'
-  $SpeedTestExePath = Join-Path $BinPath 'speedtest.exe'
 
-  if(Test-Path $SpeedTestExePath){
-    return $SpeedTestExePath
-  }
-  return ""
+    try{
+      $ScriptMyInvocation = $Script:MyInvocation.MyCommand.Path
+      $ModPath = (Get-Item $ScriptMyInvocation).DirectoryName
+      $BinPath = Join-Path $ModPath 'bin'
+      $SpeedTestExePath = Join-Path $BinPath 'speedtest.exe'
 
+      if(Test-Path $SpeedTestExePath){
+        return $SpeedTestExePath
+      }else{
+        throw "Missing speed tester app"
+      }
+      return ""
+    }catch{
+        Show-ExceptionDetails $_ -ShowStack
+    }
+
+}
+
+
+
+function Get-ClosestServers {
+    $List = &"$(Get-SpeedTesterPath)" "-L" "-fjson"
+    $ServersData = $List | ConvertFrom-Json
+    $ServerList = $ServersData.servers
+    return $ServerList
 }

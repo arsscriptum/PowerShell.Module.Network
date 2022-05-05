@@ -1,0 +1,7 @@
+{
+  "CountryCacheLifetime": 600,
+  "TechnologyCacheLifetime": 600,
+  "GroupCacheLifetime": 600,
+  "DeleteServerFallbackAfterUse": false,
+  "OfflineMode": false
+}
