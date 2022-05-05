@@ -7,38 +7,38 @@ function Initialize-NordVPNVariables {
       Write-Host -n -f DarkCyan "[Initialize] "
       Write-Host -f Cyan "Setting Variables"
       try{
-            New-Variable -Option Constant -Scope Script TechnologyURL 'https://api.nordvpn.com/v1/technologies' -ErrorAction Continue
-            New-Variable -Option Constant -Scope Script GroupURL 'https://api.nordvpn.com/v1/servers/groups' -ErrorAction Continue
-            New-Variable -Option Constant -Scope Script CountryURL 'https://api.nordvpn.com/v1/servers/countries' -ErrorAction Continue
-            New-Variable -Option Constant -Scope Script ServerURL 'https://api.nordvpn.com/v1/servers?limit={0}' -ErrorAction Continue
-            New-Variable -Option Constant -Scope Script RecommendedURL 'https://api.nordvpn.com/v1/servers/recommendations?limit={0}' -ErrorAction Continue
-            New-Variable -Option Constant -Scope Script SettingsFile (Join-Path $BinPath 'NordVPN-Servers.settings.json') -ErrorAction Continue
-            New-Variable -Option Constant -Scope Script TechnologyFallback (Join-Path $BinPath 'NordVPN_Technologies.xml') -ErrorAction Continue
-            New-Variable -Option Constant -Scope Script GroupFallback (Join-Path $BinPath 'NordVPN_Groups.xml') -ErrorAction Continue
-            New-Variable -Option Constant -Scope Script CountryFallback (Join-Path $BinPath 'NordVPN_Countries.xml') -ErrorAction Continue
-            New-Variable -Option Constant -Scope Script ServerFallback (Join-Path $BinPath 'NordVPN_Servers.xml') -ErrorAction Continue
-            New-Variable -Option Constant -Scope Script ServersCompressed ($ServerFallback, '.zip' -join '') -ErrorAction Continue
-            New-Variable -Option Constant -Scope Script FailedList 'Unable to retrieve server list from NordVPN API' -ErrorAction Continue
-            New-Variable -Option Constant -Scope Script FailedConv 'Unable to process server list!' -ErrorAction Continue
-            New-Variable  -ErrorAction Continue -Option Constant -Scope Script DefaultSettings @{
+            New-Variable -Option Constant -Scope Script TechnologyURL 'https://api.nordvpn.com/v1/technologies' -ErrorAction Ignore
+            New-Variable -Option Constant -Scope Script GroupURL 'https://api.nordvpn.com/v1/servers/groups' -ErrorAction Ignore
+            New-Variable -Option Constant -Scope Script CountryURL 'https://api.nordvpn.com/v1/servers/countries' -ErrorAction Ignore
+            New-Variable -Option Constant -Scope Script ServerURL 'https://api.nordvpn.com/v1/servers?limit={0}' -ErrorAction Ignore
+            New-Variable -Option Constant -Scope Script RecommendedURL 'https://api.nordvpn.com/v1/servers/recommendations?limit={0}' -ErrorAction Ignore
+            New-Variable -Option Constant -Scope Script SettingsFile (Join-Path $BinPath 'NordVPN-Servers.settings.json') -ErrorAction Ignore
+            New-Variable -Option Constant -Scope Script TechnologyFallback (Join-Path $BinPath 'NordVPN_Technologies.xml') -ErrorAction Ignore
+            New-Variable -Option Constant -Scope Script GroupFallback (Join-Path $BinPath 'NordVPN_Groups.xml') -ErrorAction Ignore
+            New-Variable -Option Constant -Scope Script CountryFallback (Join-Path $BinPath 'NordVPN_Countries.xml') -ErrorAction Ignore
+            New-Variable -Option Constant -Scope Script ServerFallback (Join-Path $BinPath 'NordVPN_Servers.xml') -ErrorAction Ignore
+            New-Variable -Option Constant -Scope Script ServersCompressed ($ServerFallback, '.zip' -join '') -ErrorAction Ignore
+            New-Variable -Option Constant -Scope Script FailedList 'Unable to retrieve server list from NordVPN API' -ErrorAction Ignore
+            New-Variable -Option Constant -Scope Script FailedConv 'Unable to process server list!' -ErrorAction Ignore
+            New-Variable  -ErrorAction Ignore -Option Constant -Scope Script DefaultSettings @{
                 CountryCacheLifetime         = @([UInt32], 600)
                 GroupCacheLifetime           = @([UInt32], 600)
                 TechnologyCacheLifetime      = @([UInt32], 600)
                 OfflineMode                  = @([Boolean], $false)
                 DeleteServerFallbackAfterUse = @([Boolean], $false)
             }
-            New-Variable - -ErrorAction Continue Option Constant -Scope Script KnownCountries @(
+            New-Variable - -ErrorAction Ignore Option Constant -Scope Script KnownCountries @(
                 'AL', 'AR', 'AU', 'AT', 'BE', 'BA', 'BR', 'BG', 'CA', 'CL', 'CR', 'HR', 'CY', 'CZ', 'DK', 'EE', 'FI',
                 'FR', 'GE', 'DE', 'GR', 'HK', 'HU', 'IS', 'IN', 'ID', 'IE', 'IL', 'IT', 'JP', 'LV', 'LU', 'MY', 'MX',
                 'MD', 'NL', 'NZ', 'MK', 'NO', 'PL', 'PT', 'RO', 'RS', 'SG', 'SK', 'SI', 'ZA', 'KR', 'ES', 'SE', 'CH',
                 'TW', 'TH', 'TR', 'UA', 'AE', 'GB', 'US', 'VN'
             )
-            New-Variable  -ErrorAction Continue -Option Constant -Scope Script KnownGroups @(
+            New-Variable  -ErrorAction Ignore -Option Constant -Scope Script KnownGroups @(
                 'legacy_double_vpn', 'legacy_onion_over_vpn', 'legacy_ultra_fast_tv', 'legacy_anti_ddos',
                 'legacy_dedicated_ip', 'legacy_standard', 'legacy_netflix_usa', 'legacy_p2p', 'legacy_obfuscated_servers',
                 'europe', 'the_americas', 'asia_pacific', 'africa_the_middle_east_and_india'
             )
-            New-Variable  -ErrorAction Continue -Option Constant -Scope Script KnownTechnologies @(
+            New-Variable  -ErrorAction Ignore -Option Constant -Scope Script KnownTechnologies @(
                 'ikev2', 'openvpn_udp', 'openvpn_tcp', 'socks', 'proxy', 'pptp', 'l2tp', 'openvpn_xor_udp', 'openvpn_xor_tcp',
                 'proxy_cybersec', 'proxy_ssl', 'proxy_ssl_cybersec', 'ikev2_v6', 'openvpn_udp_v6', 'openvpn_tcp_v6',
                 'wireguard_udp', 'openvpn_udp_tls_crypt', 'openvpn_tcp_tls_crypt', 'openvpn_dedicated_udp',
@@ -48,9 +48,9 @@ function Initialize-NordVPNVariables {
             [DateTime]$script:CountryCacheDate = [DateTime]::MinValue
             [DateTime]$script:TechnologyCacheDate = [DateTime]::MinValue
             [DateTime]$script:GroupCacheDate = [DateTime]::MinValue
-            New-Variable -Scope Script CountryCache $null -ErrorAction Continue
-            New-Variable -Scope Script TechnologyCache $null -ErrorAction Continue
-            New-Variable -Scope Script GroupCache $null -ErrorAction Continue
+            New-Variable -Scope Script CountryCache $null -ErrorAction Ignore
+            New-Variable -Scope Script TechnologyCache $null -ErrorAction Ignore
+            New-Variable -Scope Script GroupCache $null -ErrorAction Ignore
         }catch{
             Write-Host -n -f DarkRed "[WARNING] "
             Write-Host -f DarkYellow "$_"
