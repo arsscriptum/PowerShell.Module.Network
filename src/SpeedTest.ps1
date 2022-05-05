@@ -6,9 +6,39 @@
 
 
 
+# ============================================================================================================
+# SCRIPT VARIABLES
+# ============================================================================================================
+$Script:CurrentPath = (Get-Location).Path
+$Script:ScriptPath = ''
+$Script:CurrentModule = $ExecutionContext.SessionState.Module
+
+if(($Global:MyInvocation) -And ($Global:MyInvocation.MyCommand) -And ($Global:MyInvocation.MyCommand.Path)){
+    $Script:ScriptPath  = Split-Path $Global:MyInvocation.MyCommand.Path
+}
+$Script:PwshPath = (Get-Item ((Get-Command pwsh.exe).Source)).DirectoryName
+
+$Script:Edition=$PSVersionTable.PSEdition.ToString()
+$Script:Version=$PSVersionTable.PSVersion.ToString()
+$Script:Paths = (Get-ModulePath | where Writeable -eq $True).Path
+$Script:DefaultModulePath = ''
+if($Paths.Count -gt 0){
+     $DefaultModulePath = $Paths[0]
+}
+
+
 
 
 function Get-SpeedTesterPath {
-  Write-Host -f DarkRed "Not yet implemented"
-  return $False
+       
+  $ScriptMyInvocation = $Script:MyInvocation.MyCommand.Path
+  $ModPath = (Get-Item $ScriptMyInvocation).DirectoryName
+  $BinPath = Join-Path $ModPath 'bin'
+  $SpeedTestExePath = Join-Path $BinPath 'speedtest.exe'
+
+  if(Test-Path $SpeedTestExePath){
+    return $SpeedTestExePath
+  }
+  return ""
+
 }
